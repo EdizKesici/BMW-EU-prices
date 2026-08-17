@@ -124,15 +124,32 @@ export default function Home() {
 
   // Recompute cross-border whenever result or residence changes
   useEffect(() => {
-    if (!result) {
-      setCrossBorderRows([])
-      return
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (cancelled) return
+
+      if (!result) {
+        setCrossBorderRows([])
+        return
+      }
+
+      setCrossBorderLoading(true)
+      computeCrossBorder(result, residence)
+        .then((rows) => {
+          if (!cancelled) setCrossBorderRows(rows)
+        })
+        .catch(() => {
+          if (!cancelled) setCrossBorderRows([])
+        })
+        .finally(() => {
+          if (!cancelled) setCrossBorderLoading(false)
+        })
+    })
+
+    return () => {
+      cancelled = true
     }
-    setCrossBorderLoading(true)
-    computeCrossBorder(result, residence)
-      .then((rows) => setCrossBorderRows(rows))
-      .catch(() => setCrossBorderRows([]))
-      .finally(() => setCrossBorderLoading(false))
   }, [result, residence])
 
   const cheapestCrossBorder = crossBorderRows.length > 0

@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import { geoMercator, geoPath } from 'd3-geo'
 import { feature } from 'topojson-client'
+import type { Topology, GeometryCollection } from 'topojson-specification'
 import type { CountryPriceQuote } from '@/lib/types'
 import { COUNTRY_MAP } from '@/lib/types'
 
@@ -35,8 +36,11 @@ export function PriceMap({ quotes, fxRates }: PriceMapProps) {
   useEffect(() => {
     fetch('/world-50m.json')
       .then((r) => r.json())
-      .then((topo) => {
-        const countries = feature(topo, topo.objects.countries)
+      .then((topo: Topology) => {
+        const countries = feature<{ name: string }>(
+          topo,
+          topo.objects.countries as GeometryCollection<{ name: string }>
+        )
         setGeoData(countries.features as GeoFeature[])
       })
       .catch(() => {})
