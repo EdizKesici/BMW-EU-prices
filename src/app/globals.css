@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  /* BMW design: 0px radius for everything */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+:root {
+  --radius: 0px;
+  /* BMW corporate palette */
+  --background: #ffffff;
+  --foreground: #262626;
+  --card: #ffffff;
+  --card-foreground: #262626;
+  --popover: #ffffff;
+  --popover-foreground: #262626;
+  /* BMW Blue #1c69d4 as primary */
+  --primary: #1c69d4;
+  --primary-foreground: #ffffff;
+  /* Light surfaces */
+  --secondary: #f7f7f7;
+  --secondary-foreground: #262626;
+  --muted: #fafafa;
+  --muted-foreground: #6b6b6b;
+  --accent: #f7f7f7;
+  --accent-foreground: #262626;
+  --destructive: #dc2626;
+  /* Hairlines */
+  --border: #e6e6e6;
+  --input: #e6e6e6;
+  --ring: #1c69d4;
+  --chart-1: #1c69d4;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #dc2626;
+  --chart-5: #6b6b6b;
+  --sidebar: #f7f7f7;
+  --sidebar-foreground: #262626;
+  --sidebar-primary: #1c69d4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f7f7f7;
+  --sidebar-accent-foreground: #262626;
+  --sidebar-border: #e6e6e6;
+  --sidebar-ring: #1c69d4;
+}
+
+.dark {
+  /* BMW dark: surface-dark #1a2129 */
+  --background: #1a2129;
+  --foreground: #ffffff;
+  --card: #262e38;
+  --card-foreground: #ffffff;
+  --popover: #262e38;
+  --popover-foreground: #ffffff;
+  --primary: #1c69d4;
+  --primary-foreground: #ffffff;
+  --secondary: #262e38;
+  --secondary-foreground: #ffffff;
+  --muted: #262e38;
+  --muted-foreground: #bbbbbb;
+  --accent: #262e38;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #ffffff20;
+  --input: #ffffff20;
+  --ring: #1c69d4;
+  --chart-1: #1c69d4;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #dc2626;
+  --chart-5: #6b6b6b;
+  --sidebar: #262e38;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #1c69d4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #262e38;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #ffffff20;
+  --sidebar-ring: #1c69d4;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  /* BMW Type Next substitute: Inter 700 for display/buttons, 300 for body */
+  /* Force rectangular buttons and inputs - BMW signature 0px radius */
+  button, input, [role="button"], [data-slot="button"] {
+    border-radius: 0px !important;
+  }
+  /* Cards: 0px radius, no shadow - BMW corporate style */
+  [data-slot="card"] {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+  }
+  /* Inputs: 0px radius, hairline border */
+  input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
+    border-radius: 0px !important;
+  }
+  /* Badges: 0px radius */
+  [data-slot="badge"] {
+    border-radius: 0px !important;
+  }
+  /* Select triggers */
+  [data-slot="select-trigger"], [data-slot="select-content"] {
+    border-radius: 0px !important;
+  }
+  /* Dialogs can keep slight radius (very rare in BMW design) */
+  [data-slot="dialog-content"] {
+    border-radius: 0px !important;
+  }
+  /* Tabs */
+  [data-slot="tabs-trigger"] {
+    border-radius: 0px !important;
+  }
+  /* Table headers */
+  [data-slot="table-header"] {
+    border-radius: 0px !important;
+  }
+}

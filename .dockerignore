@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+research
+scripts
+*.md
+!README.md
+dev.log
+server.log
