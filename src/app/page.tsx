@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
-import { Loader2, Search, AlertCircle, ExternalLink, ChevronDown, ChevronRight, Download, History, Trash2, X, Map as MapIcon, Table as TableIcon, Calculator, Info } from 'lucide-react'
+import { Loader2, Search, AlertCircle, ExternalLink, ChevronDown, ChevronRight, Download, History, Trash2, X, Map as MapIcon, Table as TableIcon, Calculator, Info, Sparkles, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -39,7 +39,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { PriceMap } from '@/components/price-map'
 
 const EXAMPLE_URL =
-  'https://configure.bmw.be/fr_BE/configure/G09/31CS/FVCDA,P0C36,S01CB,S01DF,S01DZ,S0230,S02PA,S02T4,S02TB,S02VB,S02VC,S02VW,S0302,S0322,S0323,S03DN,S03M2,S03PS,S0420,S0423,S0428,S044A,S0453,S04FL,S04HA,S04HB,S04LW,S04MA,S04T2,S04T7,S04U8,S04U9,S04UR,S04V1,S0548,S05AC,S05AL,S05AU,S05AV,S05DN,S0654,S06AE,S06AF,S06AK,S06C4,S06F1,S06NX,S06PA,S06U3,S07CG,S07M9,S07ME,S07RS,S0851,S0886,S08KA,S08R3,S08R9,S08S3,S08WM,S08WN,S0925/EI0026F2,EI0026XW,EI0027VQ,SE000034'
+  'https://configure.bmw.be/fr_BE/configure/G83/41BA/FVBTQ,P0490,PIS0K,S01CB,S01DG,S01MB,S01U1,S0230,S0248,S02PA,S02T4,S02VB,S02VC,S02VF,S0302,S0322,S0387,S03M5,S03MF,S03YA,S0428,S0430,S0431,S0453,S0459,S0488,S0493,S0494,S04GQ,S04MC,S04NE,S04NH,S04U0,S0534,S0548,S0552,S05AC,S05AQ,S05AU,S05DA,S05DN,S0654,S0688,S06AE,S06AF,S06AK,S06C4,S06DR,S06NX,S06PA,S06U3,S06VB,S0712,S071C,S0760,S0775,S07A2,S07CG,S07M9,S07ME,S0851,S0886,S08KA,S08R3,S08R9,S08S3,S08TF,S08TR,S08WD,S08WM/EI0026WW'
 
 type SortKey = 'totalNet' | 'baseNet' | 'optionsNet' | 'country'
 
@@ -73,9 +73,8 @@ export default function Home() {
       })
   }, [])
 
-  async function handleCompare(e: React.FormEvent) {
-    e.preventDefault()
-    if (!url.trim()) {
+  async function runCompare(configUrl: string) {
+    if (!configUrl.trim()) {
       setError('Please paste a BMW configuration URL')
       return
     }
@@ -84,7 +83,7 @@ export default function Home() {
     setResult(null)
     try {
       const res = await fetch(
-        `/api/pricing?configUrl=${encodeURIComponent(url.trim())}`
+        `/api/pricing?configUrl=${encodeURIComponent(configUrl.trim())}`
       )
       const data = await res.json()
       if (!res.ok) {
@@ -96,6 +95,16 @@ export default function Home() {
     } finally {
       setLoading(false)
     }
+  }
+
+  function handleCompare(e: React.FormEvent) {
+    e.preventDefault()
+    runCompare(url)
+  }
+
+  function handleTryExample() {
+    setUrl(EXAMPLE_URL)
+    runCompare(EXAMPLE_URL)
   }
 
   // Sorted quotes (ex-VAT comparison tab) - uses dynamic FX rates
@@ -223,6 +232,17 @@ export default function Home() {
                 )}
               </Button>
             </form>
+            <Button
+              type="button"
+              variant="link"
+              size="sm"
+              onClick={handleTryExample}
+              disabled={loading}
+              className="h-auto p-0 mt-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              <Sparkles className="mr-1 h-3 w-3" />
+              Try with an example
+            </Button>
           </CardContent>
         </Card>
 
