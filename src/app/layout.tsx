@@ -20,10 +20,40 @@ const hankenGrotesk = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "BMW EU Prices - Compare ex-VAT prices across EU countries",
-  description: "Compare ex-VAT prices of BMW configurations across 24 EU countries. Find the cheapest country to buy your BMW.",
-  keywords: ["BMW", "price", "ex-VAT", "cross-border", "EU", "comparator"],
-  authors: [{ name: "Ediz" }],
+  metadataBase: new URL('https://bmw-eu-prices.vercel.app'),
+  title: 'BMW EU Prices — Compare ex-VAT prices across 24 EU countries',
+  description: 'Compare ex-VAT prices of BMW configurations across 24 EU countries. Find the cheapest country to buy your BMW and calculate cross-border total cost.',
+  keywords: ['BMW', 'price', 'ex-VAT', 'cross-border', 'EU', 'comparator', 'BMW configurator'],
+  authors: [{ name: 'Ediz' }],
+  alternates: {
+    canonical: 'https://bmw-eu-prices.vercel.app',
+  },
+  openGraph: {
+    title: 'BMW EU Prices',
+    description: 'Compare ex-VAT prices of BMW configurations across 24 EU countries. Find the cheapest country to buy your BMW.',
+    url: 'https://bmw-eu-prices.vercel.app',
+    siteName: 'BMW EU Prices',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'BMW EU Prices',
+    description: 'Compare ex-VAT prices of BMW configurations across 24 EU countries.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  // Verification tokens — fill in AFTER creating accounts on Google Search
+  // Console and Bing Webmaster Tools (Phase 2 of the SEO setup).
+  // Leave empty for now, deploy, then come back here with your tokens.
+  verification: {
+    google: '',
+    other: {
+      'msvalidate.01': '',
+    },
+  },
 };
 
 export default function RootLayout({
