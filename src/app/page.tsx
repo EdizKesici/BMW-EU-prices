@@ -36,7 +36,20 @@ import { computeCrossBorder, FALLBACK_FX_TO_EUR } from '@/lib/crossborder'
 import { exportCsv, exportJson, downloadFile, generateFilename } from '@/lib/export'
 import { useHistory } from '@/hooks/use-history'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { PriceMap } from '@/components/price-map'
+import dynamic from 'next/dynamic'
+
+// MapLibre GL is WebGL-only and can't run server-side. Load the map component
+// dynamically with ssr:false so it's only ever evaluated in the browser, and
+// so the (relatively heavy) maplibre-gl bundle stays out of the First Load JS
+// of the page.
+const PriceMap = dynamic(
+  () => import('@/components/price-map').then((m) => m.PriceMap),
+  { ssr: false, loading: () => (
+    <div className="flex items-center justify-center h-96">
+      <div className="text-sm text-muted-foreground">Loading map...</div>
+    </div>
+  ) }
+)
 
 const EXAMPLE_URL =
   'https://configure.bmw.be/fr_BE/configure/G83/41BA/FVBTQ,P0490,PIS0K,S01CB,S01DG,S01MB,S01U1,S0230,S0248,S02PA,S02T4,S02VB,S02VC,S02VF,S0302,S0322,S0387,S03M5,S03MF,S03YA,S0428,S0430,S0431,S0453,S0459,S0488,S0493,S0494,S04GQ,S04MC,S04NE,S04NH,S04U0,S0534,S0548,S0552,S05AC,S05AQ,S05AU,S05DA,S05DN,S0654,S0688,S06AE,S06AF,S06AK,S06C4,S06DR,S06NX,S06PA,S06U3,S06VB,S0712,S071C,S0760,S0775,S07A2,S07CG,S07M9,S07ME,S0851,S0886,S08KA,S08R3,S08R9,S08S3,S08TF,S08TR,S08WD,S08WM/EI0026WW'

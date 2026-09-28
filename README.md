@@ -58,14 +58,15 @@ Select your residence country to see the total cost of buying in each EU country
 - **Next.js 16** (App Router, standalone output)
 - **TypeScript**
 - **Tailwind CSS 4** + **shadcn/ui**
-- **d3-geo** + **topojson** for the map
+- **MapLibre GL JS** + **react-map-gl** for the map (vector tiles via OpenFreeMap)
 - **next-themes** for dark mode
 
 ## Data sources
 
 - **Prices:** BMW UCP API (`prod.ucp.bmw.cloud`) - public API key embedded in the BMW configurator's JavaScript
 - **Exchange rates:** [frankfurter.dev](https://frankfurter.dev) (ECB daily rates)
-- **Map geometry:** [world-atlas](https://github.com/topojson/world-atlas) (50m resolution)
+- **Map tiles:** [OpenFreeMap](https://openfreemap.org) (Positron / Dark styles, no API key, no quota)
+- **Map geometry:** Natural Earth 110m admin-0 countries, filtered to the 24 EU countries (`public/eu-countries.geojson`)
 
 ## Limitations
 - 24 EU countries (Cyprus, Ireland, Malta excluded - BMW doesn't offer enough models there)
