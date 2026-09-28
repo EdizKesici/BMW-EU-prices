@@ -175,7 +175,6 @@ export default function HowItWorksPage() {
           <CardContent className="space-y-2 text-sm">
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>24 EU countries supported (Cyprus, Ireland, and Malta excluded - BMW doesn&apos;t offer enough models there)</li>
-              <li>Switzerland and Norway excluded (not in EU, different VAT principle)</li>
               <li>Prices are valid for today and may change</li>
             </ul>
           </CardContent>

@@ -41,7 +41,7 @@ import { PriceMap } from '@/components/price-map'
 const EXAMPLE_URL =
   'https://configure.bmw.be/fr_BE/configure/G83/41BA/FVBTQ,P0490,PIS0K,S01CB,S01DG,S01MB,S01U1,S0230,S0248,S02PA,S02T4,S02VB,S02VC,S02VF,S0302,S0322,S0387,S03M5,S03MF,S03YA,S0428,S0430,S0431,S0453,S0459,S0488,S0493,S0494,S04GQ,S04MC,S04NE,S04NH,S04U0,S0534,S0548,S0552,S05AC,S05AQ,S05AU,S05DA,S05DN,S0654,S0688,S06AE,S06AF,S06AK,S06C4,S06DR,S06NX,S06PA,S06U3,S06VB,S0712,S071C,S0760,S0775,S07A2,S07CG,S07M9,S07ME,S0851,S0886,S08KA,S08R3,S08R9,S08S3,S08TF,S08TR,S08WD,S08WM/EI0026WW'
 
-type SortKey = 'totalNet' | 'baseNet' | 'optionsNet' | 'country'
+type SortKey = 'totalNet' | 'baseNet' | 'country'
 
 export default function Home() {
   const [url, setUrl] = useState('')
@@ -114,7 +114,6 @@ export default function Home() {
       q,
       totalEur: q.totalNetPrice * (fxRates[q.currency] ?? 1),
       baseEur: q.baseNetPrice * (fxRates[q.currency] ?? 1),
-      optionsEur: q.optionsNetTotal * (fxRates[q.currency] ?? 1),
     }))
     withEur.sort((a, b) => {
       if (a.q.totalNetPrice === 0 && b.q.totalNetPrice === 0)
@@ -122,8 +121,8 @@ export default function Home() {
       if (a.q.totalNetPrice === 0) return 1
       if (b.q.totalNetPrice === 0) return -1
       if (sortBy === 'country') return a.q.country.localeCompare(b.q.country)
-      const va = sortBy === 'totalNet' ? a.totalEur : sortBy === 'baseNet' ? a.baseEur : sortBy === 'optionsNet' ? a.optionsEur : 0
-      const vb = sortBy === 'totalNet' ? b.totalEur : sortBy === 'baseNet' ? b.baseEur : sortBy === 'optionsNet' ? b.optionsEur : 0
+      const va = sortBy === 'totalNet' ? a.totalEur : a.baseEur
+      const vb = sortBy === 'totalNet' ? b.totalEur : b.baseEur
       return va - vb
     })
     return withEur.map((x) => x.q)
@@ -283,18 +282,6 @@ export default function Home() {
                     }
                   />
                 </div>
-                <div className="flex flex-wrap gap-1 mt-3">
-                  {result.config.selectedOptions.slice(0, 25).map((opt) => (
-                    <Badge key={opt} variant="secondary" className="font-mono text-[10px]">
-                      {opt}
-                    </Badge>
-                  ))}
-                  {result.config.selectedOptions.length > 25 && (
-                    <Badge variant="outline" className="text-[10px]">
-                      +{result.config.selectedOptions.length - 25} more
-                    </Badge>
-                  )}
-                </div>
                 {result.cached && (
                   <p className="text-[11px] text-muted-foreground italic mt-2">
                     Result served from cache (24h).
@@ -374,9 +361,6 @@ export default function Home() {
                       </SortButton>
                       <SortButton active={sortBy === 'baseNet'} onClick={() => setSortBy('baseNet')}>
                         Base price
-                      </SortButton>
-                      <SortButton active={sortBy === 'optionsNet'} onClick={() => setSortBy('optionsNet')}>
-                        Options price
                       </SortButton>
                       <SortButton active={sortBy === 'country'} onClick={() => setSortBy('country')}>
                         Country (A-Z)
@@ -689,7 +673,6 @@ function HtvaComparisonTable({
               <TableHead className="text-right">VAT</TableHead>
               <TableHead className="text-right">Currency</TableHead>
               <TableHead className="text-right">Base ex-VAT</TableHead>
-              <TableHead className="text-right">Options ex-VAT</TableHead>
               <TableHead className="text-right">Total ex-VAT</TableHead>
               <TableHead className="text-right">≈ EUR</TableHead>
               <TableHead className="text-right">difference</TableHead>
@@ -726,18 +709,6 @@ function HtvaComparisonTable({
                   </TableCell>
                   <TableCell className="text-right font-mono text-xs">
                     {q.baseNetPrice > 0 ? fmt.format(q.baseNetPrice) : '-'}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {q.optionsNetTotal > 0 ? (
-                      <span>
-                        {fmt.format(q.optionsNetTotal)}
-                        <span className="text-[10px] text-muted-foreground ml-1">
-                          ({q.paidOptionsCount})
-                        </span>
-                      </span>
-                    ) : (
-                      '-'
-                    )}
                   </TableCell>
                   <TableCell className="text-right font-mono font-semibold">
                     {q.totalNetPrice > 0 ? fmt.format(q.totalNetPrice) : '-'}
