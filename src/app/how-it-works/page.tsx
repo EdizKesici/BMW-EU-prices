@@ -8,19 +8,22 @@ import Link from 'next/link'
 export default function HowItWorksPage() {
   return (
     <main className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center gap-4">
+      <header className="bg-card sticky top-0 z-10">
+        <div className="max-w-[1200px] mx-auto px-6 py-5 flex items-center gap-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/">
               <ChevronLeft className="h-4 w-4 mr-1" />
               Back
             </Link>
           </Button>
-          <h1 className="text-xl font-bold">How it works</h1>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">How it works</h1>
+        </div>
+        <div className="m-stripe" aria-hidden>
+          <span /><span /><span />
         </div>
       </header>
 
-      <section className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+      <section className="max-w-3xl mx-auto px-6 py-12 space-y-8">
         <Card>
           <CardHeader>
             <CardTitle className="text-lg">The principle</CardTitle>

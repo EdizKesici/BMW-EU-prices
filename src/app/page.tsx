@@ -179,10 +179,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background flex flex-col">
-      <header className="border-b bg-card sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <header className="bg-card sticky top-0 z-10">
+        <div className="max-w-[1200px] mx-auto px-6 py-5 flex items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
               BMW EU Prices
             </h1>
             <p className="text-xs md:text-sm text-muted-foreground mt-1">
@@ -199,9 +199,15 @@ export default function Home() {
             <ThemeToggle />
           </div>
         </div>
+        {/* M-stripe divider — BMW M signature accent, full-width under the header.
+            Three solid-color spans (no CSS gradient) to avoid sub-pixel
+            rendering artifacts on thin bands. */}
+        <div className="m-stripe" aria-hidden>
+          <span /><span /><span />
+        </div>
       </header>
 
-      <section className="flex-1 max-w-6xl w-full mx-auto px-4 py-8 space-y-6">
+      <section className="flex-1 max-w-[1200px] w-full mx-auto px-6 py-12 space-y-10">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm text-muted-foreground">
             Paste a BMW configurator URL, then click Compare.
@@ -218,7 +224,10 @@ export default function Home() {
         </div>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">1. BMW Configuration</CardTitle>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <span className="text-xs label-uppercase text-muted-foreground">Step 1</span>
+              BMW Configuration
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleCompare} className="flex gap-2">
@@ -270,8 +279,9 @@ export default function Home() {
           <>
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">
-                  2. Detected configuration
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <span className="text-xs label-uppercase text-muted-foreground">Step 2</span>
+                  Detected configuration
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
@@ -362,8 +372,9 @@ export default function Home() {
               <TabsContent value="htva" className="space-y-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">
-                      3. Ex-VAT prices by country
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <span className="text-xs label-uppercase text-muted-foreground">Step 3</span>
+                      Ex-VAT prices by country
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -402,8 +413,9 @@ export default function Home() {
               <TabsContent value="map" className="space-y-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">
-                      3. Price map (ex-VAT, ≈ EUR)
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <span className="text-xs label-uppercase text-muted-foreground">Step 3</span>
+                      Price map (ex-VAT, ≈ EUR)
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -424,8 +436,9 @@ export default function Home() {
               <TabsContent value="crossborder" className="space-y-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">
-                      3. Total cost if I live in...
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <span className="text-xs label-uppercase text-muted-foreground">Step 3</span>
+                      Total cost if I live in...
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -493,7 +506,7 @@ export default function Home() {
 
       {/* History section */}
       {historyLoaded && history.length > 0 && (
-        <section className="max-w-6xl w-full mx-auto px-4 pb-8">
+        <section className="max-w-[1200px] w-full mx-auto px-6 pb-12">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">

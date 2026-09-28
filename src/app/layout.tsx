@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({
+// Hanken Grotesk is the closest free/OFL alternative to BMW Type Next Latin
+// available on Google Fonts. It is a neo-grotesque drawn from the same
+// lineage as Helvetica (Schweizer Haas Grotesk), giving the most BMW-like
+// neutrality among Google Fonts options.
+//
+// Loaded via next/font/google, which self-hosts the font files at build time
+// (no runtime request to fonts.googleapis.com → no tracking, no cookies,
+// fully RGPD-compliant).
+const hankenGrotesk = Hanken_Grotesk({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,8 +34,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} antialiased bg-background text-foreground`}
-        style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}
+        className={`${hankenGrotesk.variable} antialiased bg-background text-foreground`}
+        style={{ fontFamily: '"Hanken Grotesk", system-ui, -apple-system, sans-serif' }}
       >
         <ThemeProvider>
           {children}
