@@ -33,8 +33,9 @@ function computeBBox(
 ): [[number, number], [number, number]] | null {
   let minLng = 180, minLat = 90, maxLng = -180, maxLat = -90
   let found = false
-  const visit = (coords: number[] | number[][]) => {
-    if (typeof (coords as number[])[0] === 'number') {
+  const visit = (coords: unknown) => {
+    if (!Array.isArray(coords) || coords.length === 0) return
+    if (typeof coords[0] === 'number') {
       const [lng, lat] = coords as number[]
       if (lng < minLng) minLng = lng
       if (lng > maxLng) maxLng = lng
@@ -42,12 +43,12 @@ function computeBBox(
       if (lat > maxLat) maxLat = lat
       found = true
     } else {
-      for (const c of coords as number[][]) visit(c)
+      for (const c of coords as unknown[]) visit(c)
     }
   }
   for (const f of features) {
     if (f.geometry?.type === 'Polygon' || f.geometry?.type === 'MultiPolygon') {
-      visit(f.geometry.coordinates as number[][])
+      visit(f.geometry.coordinates as unknown)
     }
   }
   if (!found) return null
