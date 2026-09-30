@@ -45,13 +45,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Verification tokens — fill in AFTER creating accounts on Google Search
-  // Console and Bing Webmaster Tools (Phase 2 of the SEO setup).
-  // Leave empty for now, deploy, then come back here with your tokens.
+  // Verification tokens for Google Search Console and Bing Webmaster Tools.
   verification: {
-    google: '',
+    google: 'K_5bemCFKqXadhIwkGpFQilK7RFDfHKBXSuyKh2WpdU',
     other: {
-      'msvalidate.01': '',
+      'msvalidate.01': 'B6A2B585A542C89CE30E08B02CD870B8',
     },
   },
 };
